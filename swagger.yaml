@@ -19,11 +19,11 @@ paths:
     get:
       summary: User Login
       description: |
-       The endpoint takes user email and passwod and returns authentication token for given user credentials. The auth token is encrypted with userid information and user-role for authorization purposes.
+       The endpoint takes user email and passwod and returns authentication token for given user credentials. The auth token is encrypted with user-id information and user-role for authorization purposes.
       parameters:
         - name: username
           in: formData
-          description: Email of user.
+          description: User email.
           required: true
           type: string
         - name: password
@@ -35,23 +35,29 @@ paths:
         - Login
       responses:
         200:
-          description: Login using user email and password
+          description: Auth Token
           schema:
             $ref: '#/definitions/LoginToken'
         401:
-          description: Unexpected error
+          description: Invalid username/password.
           schema:
             $ref: '#/definitions/Error'
  
   /forgotPassword:
     get:
       summary: Forgot Password
-      description: The api endpoint sends an email to useremail containing link to reset password page or security code.Once user has successfully changed pass
+      description: The api endpoint sends an email to useremail containing link to reset password page or security code.Once user has successfully changed password, return authentication token.
+      parameters:
+        - name: username
+          in: formData
+          description: User email.
+          required: true
+          type: string
       tags:
         - Login
       responses:
         200:
-          description: Change Password for user
+          description: Auth Token
           schema:
             $ref: '#/definitions/LoginToken'
         default:
