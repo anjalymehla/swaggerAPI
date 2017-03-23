@@ -19,7 +19,7 @@ paths:
     get:
       summary: User Login
       description: |
-       The endpoint takes user email and passwod and returns authentication token for given user credentials. The auth token is encrypted with user-id information and user-role for authorization purposes.
+       The endpoint takes user email and passwod and returns authentication token for given user credentials if it exists in the database. The auth token is encrypted with user-id information and user-role for authorization purposes.
       parameters:
         - name: username
           in: formData
@@ -46,7 +46,7 @@ paths:
   /forgotPassword:
     get:
       summary: Forgot Password
-      description: The api endpoint sends an email to useremail containing link to reset password page or security code.Once user has successfully changed password, return authentication token.
+      description: The api endpoint sends an email to user email id containing link to reset password page or security code if there is a user entry in database.Once user has successfully changed password, return authentication token.
       parameters:
         - name: username
           in: formData
