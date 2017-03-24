@@ -64,6 +64,59 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /user/profile:
+    get:
+      summary: Get user profile
+      description: |
+        The Profile endpoint returns information of the user if the user is authorized by the system.
+      parameters:
+        - name: user_id
+          in: query
+          description: Unique identifier of user.
+          required: true
+          type: number
+          format: int
+      tags:
+        - User
+      responses:
+        200:
+          description: Profile information for a user
+          schema:
+            $ref: '#/definitions/Profile'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /user/update:
+    get:
+      summary: Update user information
+      description: |
+        The Update endpoint returns the result of user's attemp to add, delete or modify their information.
+      parameters:
+        - name: user_id
+          in: query
+          description: Unique identifier of user
+          required: true
+          type: number
+          format: int
+        - name: user_profile
+          in: query
+          description: Information modefied by user
+          required: true
+          type: object
+          schema:
+            $ref: '#/definitions/Profile'
+      tags:
+        - User
+      responses:
+        200:
+          description: Update successfully
+          
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
  
 definitions:
   LoginToken:
@@ -83,3 +136,52 @@ definitions:
         type: string
       fields:
         type: string
+
+  Profile:
+    type: object
+    properties:
+      company_name:
+        type: string
+        description: Company name of the user
+      mission_statement:
+        type: string
+        description: Mission statement of the user.
+      purpose:
+        type: string
+        description: Purpose ot the user indicating why they are here.
+      type_of_work:
+        type: string
+        description: Type of the user, such as entrepreneur, investor, lawyer, company, researcher, student, etc.
+      employee:
+        description: Employees who will attend the conference. Can be null.
+        type: array
+        items:
+          $ref: '#/definitions/Employee'
+      project:
+        description: Projects of the company. Can be null.
+        type: array
+        items:
+          $ref: '#/definitions/Project'
+      business_keyword:
+        type: string
+        description: one or more keywords of the company. Can be null.
+  
+  Project:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the project.
+      description:
+        type: string
+        description: Brief description of the project.
+  
+  Employee:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the employee
+      email:
+        type: string
+        description: Email of the employee
